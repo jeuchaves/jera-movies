@@ -53,7 +53,6 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
     }
 
     const handleSubmit = (dados: ILoginData) => {
-        console.log('entrando');
         setIsLoading(true)
         loginValidationSchema
             .validate(dados, { abortEarly: false })
@@ -74,7 +73,6 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
     }
 
     const handleSignIn = (dados: ICadastroData) => {
-        console.log('cadastrando');
         setIsLoading(true);
         cadastroValidationSchema
             .validate(dados, { abortEarly: false })

@@ -22,6 +22,13 @@ export const errorInterceptor = (error: AxiosError) => {
         }
     }
 
+    if (error.response?.status === 400) {
+        const errorMessage = (error.response.data as ErrorResponse).errors?.default;
+        if (errorMessage === 'Perfil não encontrado') {
+            window.location.href = '/selecionar-perfil';
+        }
+    }
+    
     return Promise.reject(error);
 
 }
