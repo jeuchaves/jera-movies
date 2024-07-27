@@ -6,6 +6,7 @@ import React, {
     useMemo,
     useState,
 } from 'react';
+
 import { AuthService } from '../services/api/auth/AuthService';
 
 interface IAuthContextData {
@@ -15,20 +16,20 @@ interface IAuthContextData {
 }
 const AuthContext = createContext({} as IAuthContextData);
 
-const LOCAL_STORAGE_KEY__ACESS_TOKEN = 'APP_ACESS_TOKEN'
+const LOCAL_STORAGE_KEY__ACCESS_TOKEN = 'APP_ACCESS_TOKEN'
 
 interface IAuthProviderProps {
     children: React.ReactNode;
 }
 export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
-    const [acessToken, setAcessToken] = useState<string>();
+    const [accessToken, setAccessToken] = useState<string>();
 
     useEffect(() => {
-        const acessToken = localStorage.getItem(LOCAL_STORAGE_KEY__ACESS_TOKEN);
-        if (acessToken) {
-            setAcessToken(JSON.parse(acessToken));
+        const accessToken = localStorage.getItem(LOCAL_STORAGE_KEY__ACCESS_TOKEN);
+        if (accessToken) {
+            setAccessToken(JSON.parse(accessToken));
         } else {
-            setAcessToken(undefined);
+            setAccessToken(undefined);
         }
     }, []);
 
@@ -37,18 +38,18 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
 
         if (result instanceof Error) return result.message;
         localStorage.setItem(
-            LOCAL_STORAGE_KEY__ACESS_TOKEN,
-            JSON.stringify(result.acessToken)
+            LOCAL_STORAGE_KEY__ACCESS_TOKEN,
+            JSON.stringify(result.accessToken)
         );
-        setAcessToken(result.acessToken);
+        setAccessToken(result.accessToken);
     }, []);
 
     const handleLogout = useCallback(() => {
-        localStorage.removeItem(LOCAL_STORAGE_KEY__ACESS_TOKEN);
-        setAcessToken(undefined);
+        localStorage.removeItem(LOCAL_STORAGE_KEY__ACCESS_TOKEN);
+        setAccessToken(undefined);
     }, []);
 
-    const isAuthenticated = useMemo(() => !!acessToken, [acessToken]);
+    const isAuthenticated = useMemo(() => !!accessToken, [accessToken]);
 
     return (
         <AuthContext.Provider
