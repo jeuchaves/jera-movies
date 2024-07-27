@@ -14,5 +14,5 @@ export const Environment = {
     /**
      * URL base de consulta dos dados dessa aplicação.
      */
-    URL_BASE: 'http://localhost:3333'
+    URL_BASE: process.env.REACT_APP_BACKEND_URL || 'https://localhost:3333',
 }
