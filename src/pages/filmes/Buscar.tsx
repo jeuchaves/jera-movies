@@ -38,7 +38,6 @@ export const Buscar = () => {
                     return;
                 }
 
-                console.log(result.totalPages);
                 setTotalCount(result.totalCount);
                 setTotalPages(result.totalPages);
                 setRows(result.data);
