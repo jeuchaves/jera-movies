@@ -59,7 +59,21 @@ const create = async (perfilId: number, filmeId: number): Promise<number | Error
     }
 }
 
+const markAsWatched = async (perfilId: number, id: number): Promise<void | Error> => {
+    try {
+        const urlRelativa = `/filmes/${perfilId}/para-assistir/${id}/assistido`;
+
+        await Api().patch(urlRelativa);
+    } catch (error) {
+        console.error(error);
+        return (
+            new Error((error as { message: string }).message) || 'Erro ao marcar o filme como assistido'
+        );
+    }
+}
+
 export const WatchlistServices = {
     getAll,
     create,
+    markAsWatched,
 }

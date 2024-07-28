@@ -18,7 +18,8 @@ export const CardFilmes: React.FC<ICardFilmesProps> = ({
     mostrarBotaoAssistido = false, 
     mostrarBotaoWatchlist = false, 
     aoClicarEmAssistido, 
-    aoClicarEmWatchlist 
+    aoClicarEmWatchlist,
+    assistido = false,
 }) => {
 
     const handleWatchlistClick = () => {
@@ -63,7 +64,7 @@ export const CardFilmes: React.FC<ICardFilmesProps> = ({
                     )}
                     {mostrarBotaoAssistido && (
                         <Button 
-                            disabled={!isInWatchlist} 
+                            disabled={!isInWatchlist && Boolean(assistido)} 
                             size="small" 
                             variant="outlined" 
                             disableElevation 
