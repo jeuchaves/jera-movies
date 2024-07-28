@@ -1,6 +1,8 @@
 import { Environment } from "../../../environment";
 import { Api } from "../axios-config";
 
+export const LOCAL_STORAGE_PERFIL_ID = 'APP_PERFIL_ID';
+
 export interface IDetalhePerfil {
   id: number;
   nome: string;
@@ -59,7 +61,12 @@ const create = async (
   }
 };
 
+const selectProfile = (perfilId: number): void => {
+  localStorage.setItem(LOCAL_STORAGE_PERFIL_ID, JSON.stringify(perfilId));
+}
+
 export const PerfisService = {
   getAll,
   create,
+  selectProfile
 };
