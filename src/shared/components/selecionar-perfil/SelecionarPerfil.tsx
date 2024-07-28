@@ -1,17 +1,20 @@
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 
 import { Avatar, Dialog, DialogProps, DialogTitle, Icon, List, ListItem, ListItemAvatar, ListItemButton, ListItemText } from "@mui/material"
 import { blue } from "@mui/material/colors";
 
 import { IListagemPerfil, PerfisService } from "../../services/api/Perfis/PerfisService"
 import { AdicionarPerfil } from "./AdicionarPerfil";
+import { useAppDrawerContext } from "../../contexts";
 
 interface ISelecionarPerfilProps {
     open: boolean;
     onClose: () => void;
 }
 
-export const SelecionarPerfil = ({ open, onClose }: ISelecionarPerfilProps) => {
+export const SelecionarPerfil: React.FC<ISelecionarPerfilProps> = ({ open, onClose }) => {
+
+    const { setSelectedProfileId } = useAppDrawerContext();
 
     const [perfis, setPerfis] = useState<IListagemPerfil[]>([]);
     const [totalCount, setTotalCount] = useState<number>(0);
@@ -19,8 +22,10 @@ export const SelecionarPerfil = ({ open, onClose }: ISelecionarPerfilProps) => {
     const [isDialogAddProfileOpen, setIsDialogAddProfileOpen] = useState<boolean>(false);
 
     useEffect(() => {
-        loadProfiles();
-    }, []);
+        if (open) {
+            loadProfiles();
+        }
+    }, [open]);
 
     const loadProfiles = () => {
         setIsLoading(true);
@@ -36,7 +41,7 @@ export const SelecionarPerfil = ({ open, onClose }: ISelecionarPerfilProps) => {
     }
 
     const handleListItemClick = (perfilId: number) => {
-        PerfisService.selectProfile(perfilId);
+        setSelectedProfileId(perfilId);
         onClose();
     }
 

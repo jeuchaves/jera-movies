@@ -12,20 +12,20 @@ export const AppRoutes = () => {
     useEffect(() => {
         setDrawerOptions([
             {
-                label: 'Home',
+                label: 'Sugeridos',
                 icon: 'home',
                 path: '/home'
             },
             {
-                label: 'Cidades',
-                icon: 'location_city',
-                path: '/cidades'
+                label: 'Buscar',
+                icon: 'search',
+                path: '/buscar'
             },
             {
-                label: 'Pessoas',
-                icon: 'people',
-                path: '/pessoas'
-            }
+                label: 'Watchlist',
+                icon: 'favorite',
+                path: '/watchlist'
+            },
         ]);
     },[setDrawerOptions])
 

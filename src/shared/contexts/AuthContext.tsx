@@ -8,7 +8,6 @@ import React, {
 } from 'react';
 
 import { AuthService } from '../services/api/auth/AuthService';
-import { LOCAL_STORAGE_PERFIL_ID } from '../services/api/Perfis/PerfisService';
 
 interface IAuthContextData {
     isAuthenticated: boolean;
@@ -47,7 +46,6 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
 
     const handleLogout = useCallback(() => {
         localStorage.removeItem(LOCAL_STORAGE_KEY__ACCESS_TOKEN);
-        localStorage.removeItem(LOCAL_STORAGE_PERFIL_ID);
         setAccessToken(undefined);
     }, []);
 
