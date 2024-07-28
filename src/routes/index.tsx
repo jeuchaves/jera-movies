@@ -1,7 +1,7 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useAppDrawerContext } from "../shared/contexts";
 import { useEffect } from "react";
-import { DetalheDePessoas, ListagemDePessoas, SelecionarPerfil, Sugestoes } from "../pages";
+import { DetalheDePessoas, ListagemDePessoas, Sugestoes } from "../pages";
 import { ListagemDeCidades } from "../pages/cidades/ListagemDeCidades";
 import { DetalheDeCidades } from "../pages/cidades/DetalheDeCidades";
 
@@ -12,20 +12,20 @@ export const AppRoutes = () => {
     useEffect(() => {
         setDrawerOptions([
             {
-                label: 'Home',
+                label: 'Sugeridos',
                 icon: 'home',
                 path: '/home'
             },
             {
-                label: 'Cidades',
-                icon: 'location_city',
-                path: '/cidades'
+                label: 'Buscar',
+                icon: 'search',
+                path: '/buscar'
             },
             {
-                label: 'Pessoas',
-                icon: 'people',
-                path: '/pessoas'
-            }
+                label: 'Watchlist',
+                icon: 'favorite',
+                path: '/watchlist'
+            },
         ]);
     },[setDrawerOptions])
 
@@ -39,8 +39,6 @@ export const AppRoutes = () => {
             <Route path="/pessoas" element={<ListagemDePessoas/>}/>
             <Route path="/pessoas/detalhe/:id" element={<DetalheDePessoas/>}/>
             <Route path="*" element={<Navigate to="/home"/>}/>
-
-            <Route path="/selecionar-perfil" element={<SelecionarPerfil />} />
         </Routes>
     );
 }

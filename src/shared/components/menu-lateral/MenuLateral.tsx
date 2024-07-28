@@ -13,6 +13,8 @@ import {
 } from '@mui/material';
 import { useAppDrawerContext, useAppThemeContext, useAuthContext } from '../../contexts';
 import { useMatch, useNavigate, useResolvedPath } from 'react-router-dom';
+import { SelecionarPerfil } from '../selecionar-perfil/SelecionarPerfil';
+import { useState } from 'react';
 
 interface IListItemLinkProps {
     label: string;
@@ -60,6 +62,16 @@ export const MenuLateral: React.FC<IMenuLateralProps> = ({ children }) => {
     const { toggleTheme, themeName } = useAppThemeContext();
     const { logout } = useAuthContext();
 
+    const [isDialogProfilesOpen, setIsDialogProfilesOpen] = useState<boolean>(false);
+
+    const handleCloseDialogProfiles = () => {
+        setIsDialogProfilesOpen(false);
+    }
+
+    const toggleProfile = () => {
+        setIsDialogProfilesOpen(true);
+    }
+
     return (
         <>
             <Drawer
@@ -106,6 +118,12 @@ export const MenuLateral: React.FC<IMenuLateralProps> = ({ children }) => {
                     </Box>
                     <Box>
                         <List component="nav">
+                            <ListItemButton onClick={toggleProfile}>
+                                <ListItemIcon>
+                                    <Icon>person_icon</Icon>
+                                </ListItemIcon>
+                                <ListItemText primary='Trocar perfil'/>
+                            </ListItemButton>
                             <ListItemButton onClick={toggleTheme}>
                                 <ListItemIcon>
                                     <Icon>
@@ -135,6 +153,7 @@ export const MenuLateral: React.FC<IMenuLateralProps> = ({ children }) => {
             <Box height="100vh" marginLeft={smDown ? 0 : theme.spacing(28)}>
                 {children}
             </Box>
+            <SelecionarPerfil onClose={handleCloseDialogProfiles} open={isDialogProfilesOpen} />
         </>
     );
 };

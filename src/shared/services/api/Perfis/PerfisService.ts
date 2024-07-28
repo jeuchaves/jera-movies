@@ -1,6 +1,7 @@
 import { Environment } from "../../../environment";
 import { Api } from "../axios-config";
 
+
 export interface IDetalhePerfil {
   id: number;
   nome: string;

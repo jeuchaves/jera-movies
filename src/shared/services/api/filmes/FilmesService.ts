@@ -7,8 +7,20 @@ export interface IDetalheFilme {
 }
 
 export interface IListagemFilme {
+  adult: boolean;
+  backdrop_path: string;
+  genre_ids: number[];
   id: number;
-  nome: string;
+  original_language: string;
+  original_title: string;
+  overview: string;
+  popularity: number;
+  poster_path: string;
+  release_date: Date;
+  title: string;
+  video: boolean;
+  vote_average: number;
+  vote_count: number;
 }
 
 type TFilmesComTotalCount = {
@@ -16,9 +28,9 @@ type TFilmesComTotalCount = {
   totalCount: number;
 };
 
-const getSuggested = async (page = 1, deep = 2): Promise<TFilmesComTotalCount | Error> => {
+const getSuggested = async (perfilId: number, page = 1): Promise<TFilmesComTotalCount | Error> => {
     try {
-        const urlRelativa = `/filmes/sugeridos?page=${page}&deep=${deep}`;
+        const urlRelativa = `/filmes/${perfilId}/sugeridos?page=${page}`;
 
         const { data, headers } = await Api().get(urlRelativa);
 
