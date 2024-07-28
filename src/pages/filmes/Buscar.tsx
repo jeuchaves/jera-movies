@@ -1,19 +1,27 @@
 import { useSearchParams } from "react-router-dom"
-import { CardFilmes, FerramentasDaListagem } from "../../shared/components"
+import { CardFilmes, FerramentasDaListagem, SelecionarPerfil } from "../../shared/components"
 import { LayoutBaseDePagina } from "../../shared/layouts"
 import { useEffect, useMemo, useState } from "react";
 import { useDebounce } from "../../shared/hooks";
 import { FilmesService, IListagemFilme } from "../../shared/services/api/filmes/FilmesService";
 import { Box, Grid, Pagination, Typography } from "@mui/material";
 import { Environment } from "../../shared/environment";
+import { useAppDrawerContext } from "../../shared/contexts";
+import { WatchlistServices } from "../../shared/services/api/watchlist/WatchlistService";
 
 export const Buscar = () => {
 
     const [searchParams, setSearchParams] = useSearchParams();
+    const { selectedProfileId } = useAppDrawerContext();
     const { debounce } = useDebounce();
 
+    const [isDialogProfilesOpen, setIsDialogProfilesOpen] = useState<boolean>(false);
     const [totalCount, setTotalCount] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
+
+    const handleCloseDialogProfiles = () => {
+        setIsDialogProfilesOpen(false);
+    }
 
     const [rows, setRows] = useState<IListagemFilme[]>([]);
 
@@ -30,8 +38,14 @@ export const Buscar = () => {
     useEffect(() => {
         setIsLoading(true);
 
+        if (!selectedProfileId) {
+            setIsDialogProfilesOpen(true);
+            setIsLoading(false);
+            return;
+        }
+
         debounce(() => {
-            FilmesService.getAll(pagina, busca).then((result) => {
+            FilmesService.getAll(selectedProfileId, pagina, busca).then((result) => {
                 setIsLoading(false);
                 if (result instanceof Error) {
                     console.error(result.message);
@@ -43,7 +57,36 @@ export const Buscar = () => {
                 setRows(result.data);
             });
         });
-    }, [busca, pagina, debounce]);
+    }, [busca, pagina, debounce, selectedProfileId]);
+
+    const handleAddMovieToWatchlist = (filmeId: number) => {
+
+        if (!selectedProfileId) {
+            setIsDialogProfilesOpen(true);
+            setIsLoading(false);
+            return;
+        }
+
+        WatchlistServices.create(selectedProfileId, filmeId).then((result) => {
+            if (result instanceof Error) {
+                console.error(result.message);
+                window.alert(result.message);
+                return;
+            }
+            
+            setRows((prevWatchlist) => {
+                return prevWatchlist.map((item) => {
+                    if (item.id === filmeId) {
+                        return {
+                            ...item,
+                            isInWatchlist: true,
+                        }
+                    }
+                    return item;
+                })
+            })
+        })
+    }
 
     return (
         <LayoutBaseDePagina 
@@ -57,6 +100,7 @@ export const Buscar = () => {
                 />
             }
         >
+            <SelecionarPerfil open={isDialogProfilesOpen} onClose={handleCloseDialogProfiles} />
             <Box margin={1}>
                 {!isLoading && (
                     <>
@@ -69,7 +113,11 @@ export const Buscar = () => {
                                 <Grid container spacing={2}>
                                     {rows.map((filme) => (
                                         <Grid item key={filme.id} xs={12} sm={6} md={4} lg={3} alignItems='stretch'>
-                                            <CardFilmes {...filme} />
+                                            <CardFilmes 
+                                                {...filme} 
+                                                mostrarBotaoWatchlist
+                                                aoClicarEmWatchlist={handleAddMovieToWatchlist}
+                                            />
                                         </Grid>
                                     ))}
                                 </Grid>
