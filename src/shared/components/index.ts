@@ -4,3 +4,4 @@ export * from './ferramentas-de-detalhe/FerramentasDeDetalhe';
 export * from './login/Login';
 export * from './selecionar-perfil/SelecionarPerfil';
 export * from './selecionar-perfil/AdicionarPerfil';
+export * from './filmes/CardFilmes';
