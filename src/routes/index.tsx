@@ -1,7 +1,7 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useAppDrawerContext } from "../shared/contexts";
 import { useEffect } from "react";
-import { Buscar, Sugestoes } from "../pages";
+import { Buscar, MinhaWatchlist, Sugestoes } from "../pages";
 
 export const AppRoutes = () => {
 
@@ -32,6 +32,8 @@ export const AppRoutes = () => {
             <Route path="/home" element={<Sugestoes/>} />
 
             <Route path="/buscar" element={<Buscar/>} />
+
+            <Route path="/watchlist" element={<MinhaWatchlist/>} />
 
             <Route path="*" element={<Navigate to="/home"/>} />
         </Routes>
