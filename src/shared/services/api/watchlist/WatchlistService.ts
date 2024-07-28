@@ -39,6 +39,27 @@ const getAll = async (perfilId: number): Promise<TWatchlistComTotal | Error> => 
     }
 }
 
+const create = async (perfilId: number, filmeId: number): Promise<number | Error> => {
+    try {
+        const urlRelativa = `/filmes/${perfilId}/para-assistir/${filmeId}`;
+
+        const { data } = await Api().post<IListagemWatchlist>(urlRelativa);
+
+        if (data) {
+            return data.id;
+        }
+
+        return new Error('Erro ao criar o registro');
+    } catch (error) {
+        console.error(error);
+        return (
+            new Error((error as { message: string }).message) ||
+            "Erro ao criar o registro."
+        );
+    }
+}
+
 export const WatchlistServices = {
     getAll,
+    create,
 }

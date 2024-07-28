@@ -6,6 +6,7 @@ import { Environment } from "../../shared/environment";
 import { Box, Grid, Pagination, Typography } from "@mui/material";
 import { useAppDrawerContext } from "../../shared/contexts";
 import { useSearchParams } from "react-router-dom";
+import { WatchlistServices } from "../../shared/services/api/watchlist/WatchlistService";
 
 export const Sugestoes = () => {
 
@@ -50,6 +51,35 @@ export const Sugestoes = () => {
         setIsDialogProfilesOpen(false);
     }
 
+    const handleAddMovieToWatchlist = (filmeId: number) => {
+
+        if (!selectedProfileId) {
+            setIsDialogProfilesOpen(true);
+            setIsLoading(false);
+            return;
+        }
+
+        WatchlistServices.create(selectedProfileId, filmeId).then((result) => {
+            if (result instanceof Error) {
+                console.error(result.message);
+                window.alert(result.message);
+                return;
+            }
+            
+            setRows((prevWatchlist) => {
+                return prevWatchlist.map((item) => {
+                    if (item.id === filmeId) {
+                        return {
+                            ...item,
+                            isInWatchlist: true,
+                        }
+                    }
+                    return item;
+                })
+            })
+        })
+    }
+
     return (
         <LayoutBaseDePagina titulo="Filmes sugeridos">
             <SelecionarPerfil open={isDialogProfilesOpen} onClose={handleCloseDialogProfiles} />
@@ -65,7 +95,7 @@ export const Sugestoes = () => {
                                 <Grid container spacing={2}>
                                     {rows.map((filme) => (
                                         <Grid item key={filme.id} xs={12} sm={6} md={4} lg={3} alignItems='stretch'>
-                                            <CardFilmes {...filme} />
+                                            <CardFilmes {...filme} mostrarBotaoWatchlist aoClicarEmWatchlist={handleAddMovieToWatchlist}/>
                                         </Grid>
                                     ))}
                                 </Grid>

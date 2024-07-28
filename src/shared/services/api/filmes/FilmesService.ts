@@ -21,6 +21,7 @@ export interface IListagemFilme {
   video: boolean;
   vote_average: number;
   vote_count: number;
+  isInWatchlist?: boolean;
 }
 
 type TFilmesComTotalCount = {
@@ -57,11 +58,12 @@ const getSuggested = async (perfilId: number, page = 1): Promise<TFilmesComTotal
 }
 
 const getAll = async (
+  perfilId: number,
   page = 1,
   filter = ""
 ): Promise<TFilmesComTotalCount | Error> => {
   try {
-    const urlRelativa = `/filmes?page=${page}&filter=${filter}`;
+    const urlRelativa = `/filmes/${perfilId}/buscar?page=${page}&filter=${filter}`;
 
     const { data, headers } = await Api().get(urlRelativa);
 
