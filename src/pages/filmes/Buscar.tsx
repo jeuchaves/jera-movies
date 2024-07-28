@@ -1,58 +1,63 @@
-import { useEffect, useMemo, useState } from "react"
+import { useSearchParams } from "react-router-dom"
+import { CardFilmes, FerramentasDaListagem } from "../../shared/components"
 import { LayoutBaseDePagina } from "../../shared/layouts"
+import { useEffect, useMemo, useState } from "react";
+import { useDebounce } from "../../shared/hooks";
 import { FilmesService, IListagemFilme } from "../../shared/services/api/filmes/FilmesService";
-import { CardFilmes, SelecionarPerfil } from "../../shared/components";
-import { Environment } from "../../shared/environment";
 import { Box, Grid, Pagination, Typography } from "@mui/material";
-import { useAppDrawerContext } from "../../shared/contexts";
-import { useSearchParams } from "react-router-dom";
+import { Environment } from "../../shared/environment";
 
-export const Sugestoes = () => {
+export const Buscar = () => {
 
-    const { selectedProfileId } = useAppDrawerContext();
     const [searchParams, setSearchParams] = useSearchParams();
+    const { debounce } = useDebounce();
 
-    const [rows, setRows] = useState<IListagemFilme[]>([]);
     const [totalCount, setTotalCount] = useState(0);
-    const [isLoading, setIsLoading] = useState<boolean>(true);
     const [totalPages, setTotalPages] = useState(0);
 
-    const [isDialogProfilesOpen, setIsDialogProfilesOpen] = useState<boolean>(false);
+    const [rows, setRows] = useState<IListagemFilme[]>([]);
+
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+
+    const busca = useMemo(() => {
+        return searchParams.get('busca') || '';
+    }, [searchParams]);
 
     const pagina = useMemo(() => {
         return Number(searchParams.get('pagina') || '1');
     }, [searchParams]);
 
-
     useEffect(() => {
         setIsLoading(true);
-        
-        if (!selectedProfileId) {
-            setIsDialogProfilesOpen(true);
-            setIsLoading(false);
-            return;
-        }
 
-        FilmesService.getSuggested(selectedProfileId, pagina)
-            .then((result) => {
+        debounce(() => {
+            FilmesService.getAll(pagina, busca).then((result) => {
                 setIsLoading(false);
-
                 if (result instanceof Error) {
+                    console.error(result.message);
                     return;
                 }
-                setRows(result.data);
+
+                console.log(result.totalPages);
                 setTotalCount(result.totalCount);
                 setTotalPages(result.totalPages);
+                setRows(result.data);
+            });
         });
-    }, [selectedProfileId, pagina]);
-
-    const handleCloseDialogProfiles = () => {
-        setIsDialogProfilesOpen(false);
-    }
+    }, [busca, pagina, debounce]);
 
     return (
-        <LayoutBaseDePagina titulo="Filmes sugeridos">
-            <SelecionarPerfil open={isDialogProfilesOpen} onClose={handleCloseDialogProfiles} />
+        <LayoutBaseDePagina 
+            titulo="Buscar filmes"
+            barraDeFerramentas={
+                <FerramentasDaListagem 
+                    textoDaBusca={busca}
+                    mostrarInputBusca
+                    mostrarBotaoNovo={false}
+                    aoMudarTextoDeBusca={(texto) => setSearchParams({ busca: texto, pagina: '1'}, { replace: true })}
+                />
+            }
+        >
             <Box margin={1}>
                 {!isLoading && (
                     <>
@@ -74,12 +79,13 @@ export const Sugestoes = () => {
                                         page={pagina}
                                         color="primary"
                                         count={totalPages}
-                                        onChange={(_, newPage) => setSearchParams({ pagina: newPage.toString()}, { replace: true })}
+                                        onChange={(_, newPage) => setSearchParams({ busca, pagina: newPage.toString()}, { replace: true })}
                                     />
                                 </Box>
                             </>
                         )}
                     </>
+                    
                 )}
             </Box>
         </LayoutBaseDePagina>
