@@ -2,7 +2,7 @@ import { Button, Dialog, DialogActions, DialogContent, DialogContentText, Dialog
 
 import * as yup from 'yup';
 import { IVFormErros, useVForm, VForm, VtexField } from "../../forms";
-import { PerfisService } from "../../services/api/Perfis/PerfisService";
+import { PerfisService } from "../../services/api/perfis/PerfisService";
 
 interface IFormData {
     nome: string;

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react"
 import { Avatar, Dialog, DialogProps, DialogTitle, Icon, List, ListItem, ListItemAvatar, ListItemButton, ListItemText } from "@mui/material"
 import { blue } from "@mui/material/colors";
 
-import { IListagemPerfil, PerfisService } from "../../services/api/Perfis/PerfisService"
+import { IListagemPerfil, PerfisService } from "../../services/api/perfis/PerfisService"
 import { AdicionarPerfil } from "./AdicionarPerfil";
 import { useAppDrawerContext } from "../../contexts";
 

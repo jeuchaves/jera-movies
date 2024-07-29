@@ -1,57 +1,97 @@
-# Projeto CRUD de Pessoas e Cidades
+# Desafio técnico - JERA: Lista de Filmes
 
-Este é um projeto de CRUD (Create, Read, Update, Delete) desenvolvido em React com TypeScript, utilizando Material-UI para o design, Axios para requisições HTTP, Yup para validação de formulários, json-server para criar uma API REST fake e proporcionar dados mockados para o desenvolvimento.
+A JERA Movie API é uma aplicação backend desenvolvida para gerenciar uma lista de filmes que o usuário gostaria de assistir. Ela permite que os usuários busquem filmes, marquem como assistidos, visualizem sua lista de filmes e gerenciem seus perfis.
 
-O projeto permite a gestão de pessoas e cidades, com funcionalidades de adicionar, visualizar, editar e excluir registros. Possui uma interface responsiva e intuitiva para uma melhor experiência do usuário.
+## Funcionalidades
 
-## Pré-requisitos
+-   **Listar filmes sugeridos**: Recupera uma lista de filmes recomendados.
+-   **Marcar como assistido**: Permite que o usuário marque um filme como assistido.
+-   **Visualizar lista de filmes para assistir**: Mostra a lista de filmes que o usuário deseja assistir.
+-   **Marcar filmes para assistir**: Adiciona um filme à lista de filmes para assistir.
+-   **Buscar filmes**: Permite ao usuário procurar filmes por título ou outros critérios.
+-   **Listar perfis**: Exibe todos os perfis disponíveis do usuário logado.
+-   **Fazer login**: Permite que o usuário faça login na aplicação.
+-   **Criar conta**: Permite que um novo usuário se cadastre na aplicação.
+-   **Criar perfil**: Permite que o usuário crie um perfil dentro da aplicação.
 
-Antes de iniciar, certifique-se de ter o Node.js e npm instalados em sua máquina.
+## Estrutura do projeto
+
+```
+.
+├── src
+    ├── pages
+    ├── routes
+    ├── shared
+        ├── components
+        ├── contexts
+        ├── environment
+        ├── forms
+        ├── hooks
+        ├── layouts
+        ├── services
+            ├── api
+        ├── themes
+    └── App.tsx
+    └── index.tsx
+└── README.md
+```
 
 ## Instalação
 
-1. Clone este repositório:
+1. Clone o repositório:
+
 ```
-git clone https://github.com/jeuchaves/react-typescript-mui
+git clone https://github.com/jeuchaves/jera-movies
+cd jera-movies
+code .
 ```
 
-2. Acesse o diretório do projeto:
-```
-cd react-typescript-mui
-```
+2. Instale as dependências:
 
-3. Instale as dependências:
 ```
 npm install
 ```
 
-## Executando o projeto
+3. Configure as variáveis de ambiente:
+   Clone o arquivo `.env.example`
 
-1. Inicie o servidor da API Fake:
-```
-npm run mock
-```
+4. Inicie a aplicação
 
-2. Inicie a aplicação React:
 ```
-npm start
+npm run start
 ```
 
-Agora você pode acessar a aplicação em http://localhost:3000.
+6. Sua aplicação estará rodando na porta `3000`. Certifique-se de configurar corretamente as variáveis de ambiente antes de iniciar a aplicação.
 
-## Funcionalidades
+## Documentação da API
 
-- **Tela Inicial:** Apresenta uma visão geral do sistema, com opções para navegar entre as páginas de pessoas e cidades.
-- **Página de Pessoas:** Exibe uma lista de pessoas cadastradas, permitindo a visualização, edição e exclusão de registros. Também possui um botão para adicionar novas pessoas.
-- **Detalhes da Pessoas:** Apresenta informações detalhadas sobre uma pessoa específica, incluindo seus dados pessoais e relacionamentos. Permite também a adição e edição de dados.
-- **Página de Cidades:** Similar à página de pessoas, exibe uma lista de cidades cadastradas, com funcionalidades semelhantes de visualização, edição e exclusão.
-- **Detalhes de Cidades:** Similar à página de pessoas, apresenta informações detalhadas sobre a cidade, incluindo seus dados pessoais e relacionamentos, tal como edição e adição de novos dados.
-- **Responsividade e Design Atraente:** O projeto foi desenvolvido com foco na responsividade e na experiência do usuário, utilizando Material-UI para criar uma interface bonita e amigável.
+Para informações completas sobre o projeto inteiro, consulte a [documentação completo do projeto](https://jeuchaves.notion.site/Desafio-T-cnico-Jera-009cfde757b2458fa6ebca34aca2a307?pvs=4)
 
-## Teconologias utilizadas
+## Sobre o Autor
 
-- React, Typescript, Material-UI, Axios, Yup, json-server
+### Jeú Chaves
 
-## Contribuição
+Desenvolvedor apaixonado por tecnologia e inovação, com experiência em criar soluções eficientes e escaláveis. Tenho expertise em desenvolvimento frontend com Vue.js e React, além de habilidades sólidas em backend com Express e gerenciamento de banco de dados.
 
-Contribuições são bem-vindas! Sinta-se à vontade para abrir uma issue para relatar bugs ou sugerir novas funcionalidades. Se preferir, faça um pull request diretamente.
+### Projetos Relevantes:
+
+-   **Sistema de Gerenciamento de Eventos (UFMS)**: Desenvolvido com Vue.js, inclui API backend própria com autenticação, permissões e segurança.
+-   **Sistema de Gerenciamento Financeiro (MVP)**: Desenvolvido em React, focado em facilitar o controle financeiro pessoal.
+
+### Experiência:
+
+-   **Frontend**: Vue.js, React
+-   **Backend**: Express, Node.js
+-   **Ferramentas**: date-fns, Axios, JWT, Knex
+-   **Banco de Dados**: PostgreSQL
+
+### Formação:
+
+-   Em reta final da faculdade, com sólida formação em programação e engenharia de software.
+
+### Contato:
+
+-   **LinkedIn**: Seu LinkedIn
+-   **GitHub**: Seu GitHub
+
+Estou sempre aberto a novos desafios e oportunidades para contribuir com projetos inovadores.
